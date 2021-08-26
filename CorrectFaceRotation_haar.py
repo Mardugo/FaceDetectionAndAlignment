@@ -6,7 +6,7 @@ eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 def CorrectRotatedFaces(filename):
     img = cv2.imread(filename)
-    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imgGray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     cv2.imshow('Original Image',img)
     cv2.waitKey(0)
 
@@ -26,6 +26,13 @@ def CorrectRotatedFaces(filename):
             y1 = eyes[0][1]+eyes[0][3]/2
             x2 = eyes[1][0]+eyes[1][2]/2
             y2 = eyes[1][1]+eyes[1][3]/2
+            if x1 > x2: 
+                x1_aux = x1
+                y1_aux = y1
+                x1 = x2
+                y1 = y2
+                x2 = x1_aux
+                y2 = y1_aux
             ang_rad = np.arctan((y2-y1)/(x2-x1))
             ang_deg = 180*ang_rad/np.pi
             roi_color = img[y:y+h, x:x+w]
